@@ -1,5 +1,5 @@
 ---
-title: Gradio Chatbot
+title: FullGitHFConnectTest
 emoji: 💬
 colorFrom: yellow
 colorTo: purple
