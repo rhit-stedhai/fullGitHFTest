@@ -26,10 +26,10 @@ jobs:
        run: |
          cd hf_space
          cp ../hugging_face_space/app.py .
-         cp ../huggin_face_space/requirements.txt .
-         cp ../huggin_face_space/.gitattributes .
-         cp ../huggin_face_space/README.md .
-         cp ../huggin_face_space/respond_params.txt .
+         cp ../hugging_face_space/requirements.txt .
+         cp ../hugging_face_space/.gitattributes .
+         cp ../hugging_face_space/README.md .
+         cp ../hugging_face_space/respond_params.txt .
          git add app.py requirements.txt .gitattributes README.md respond_params.txt
          git commit -m "Update selected files"
          git push
