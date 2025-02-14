@@ -22,6 +22,8 @@ def respond(
     top_p=float(parametersLineFour[1][:-1])
     file.close()
 
+    chat_history.append(("user", message))
+
     messages = [{"role": "system", "content": system_message}]
     for val in history:
         if val[0]:
@@ -40,6 +42,7 @@ def respond(
     ):
         token = message.choices[0].delta.content
         response += token
+        chat_history.append(("chatbot", response))
         yield response
 
 def save_chat():
