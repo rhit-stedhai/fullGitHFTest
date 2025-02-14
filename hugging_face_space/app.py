@@ -3,11 +3,13 @@ from huggingface_hub import InferenceClient
 import random
 import time
 
+chat_history = []
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
 def respond(
     message,
     history: list[tuple[str, str]],
 ):
+    # maybe put this in an on_load on something, could be why token usage makes model degrade
     file = open('respond_params.txt', 'r')
     parametersLineOne = file.readline().split("=")
     parametersLineTwo = file.readline().split("=")
@@ -43,10 +45,10 @@ css_string = """
 .gradio-app {height: 100%; width: 100%;}
 """
 
-demo = gr.ChatInterface(
-    respond,
-    css=css_string,
-    )
+with gr.Blocks() as demo:
+    chatbot = gr.ChatInterface(respond, css=css_string)
+    save_button = gr.Button("Save Chat")
+
 
 if __name__ == "__main__":
     demo.launch()
