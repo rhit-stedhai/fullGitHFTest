@@ -10,18 +10,27 @@ jobs:
   sync-to-hub:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          lfs: true
-      - name: Configure Git
-        run: |
-          git config --global user.email "stedhai@rose-hulman.edu"
-          git config --global user.name "rhit-stedhai"
-      - name: Push to hub
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: |
-          git add hugging_face_space/*
-          git commit -m "pushing to space"
-          git push https://IanStedham:$HF_TOKEN@huggingface.co/spaces/IanStedham/fullGitHFConnectTest main
+     - name: Checkout repository
+       uses: actions/checkout@v4
+     - name: Configure Git
+       run: |
+         git config --global user.email "stedhai@rose-hulman.edu"
+         git config --global user.name "rhit-stedhai"
+     - name: Clone Hugging Face Space
+       run: |
+         git clone https://IanStedham:$HF_TOKEN@huggingface.co/spaces/IanStedham/fullGitHFConnectTest main
+       env:
+         HF_TOKEN: ${{ secrets.HF_TOKEN }}
+
+     - name: Copy Selected Files
+       run: |
+         cd main
+         cp hugging_face_space/app.py .
+         cp huggin_face_space/requirements.txt .
+         cp huggin_face_space/.gitattributes .
+         cp huggin_face_space/README.md .
+         cp huggin_face_space/respond_params.txt .
+         git add app.py requirements.txt .gitattributes README.md respond_params.txt
+         git commit -m "Update selected files"
+         git push
+

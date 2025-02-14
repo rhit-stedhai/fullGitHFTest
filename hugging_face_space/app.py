@@ -68,3 +68,15 @@ if __name__ == "__main__":
     #         label="Top-p (nucleus sampling)",
     #     ),
     # ],
+
+    ######
+    # run action locally and test to see if it is doing what i actually think it is, do later if script fails, this is annoying to do
+    # 
+    # make a script to accomplish what the action is doing
+    # - clone the repo, copy certain files, and push to the space repo
+    # - would happen everytime we push to github
+    # 
+    # wild way:
+    # - configure a master repo, our repo mimics it and push to their repo directly
+    # - local checkout can have multiple origin repos, change which one it pushes to
+    # - would have to be identical
