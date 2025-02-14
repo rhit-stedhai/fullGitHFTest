@@ -18,6 +18,9 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git add .\hugging_face_space\
+          git add .\hugging_face_space\.gitattributes
+          git add .\hugging_face_space\app.py
+          git add .\hugging_face_space\README.md
+          git add .\hugging_face_space\requirements.txt
           git commit -m "pushing to space"
           git push https://IanStedham:$HF_TOKEN@huggingface.co/spaces/IanStedham/fullGitHFConnectTest main
