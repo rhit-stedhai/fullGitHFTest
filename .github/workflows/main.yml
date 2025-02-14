@@ -18,18 +18,18 @@ jobs:
          git config --global user.name "rhit-stedhai"
      - name: Clone Hugging Face Space
        run: |
-         git clone https://IanStedham:$HF_TOKEN@huggingface.co/spaces/IanStedham/fullGitHFConnectTest main
+         git clone https://IanStedham:$HF_TOKEN@huggingface.co/spaces/IanStedham/fullGitHFConnectTest hf_space
        env:
          HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
      - name: Copy Selected Files
        run: |
-         cd main
-         cp fullGitHFTest/hugging_face_space/app.py .
-         cp fullGitHFTest/huggin_face_space/requirements.txt .
-         cp fullGitHFTest/huggin_face_space/.gitattributes .
-         cp fullGitHFTest/huggin_face_space/README.md .
-         cp fullGitHFTest/huggin_face_space/respond_params.txt .
+         cd hf_space
+         cp ../hugging_face_space/app.py .
+         cp ../huggin_face_space/requirements.txt .
+         cp ../huggin_face_space/.gitattributes .
+         cp ../huggin_face_space/README.md .
+         cp ../huggin_face_space/respond_params.txt .
          git add app.py requirements.txt .gitattributes README.md respond_params.txt
          git commit -m "Update selected files"
          git push
