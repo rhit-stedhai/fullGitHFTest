@@ -3,7 +3,7 @@ from huggingface_hub import InferenceClient
 import random
 import time
 
-client = InferenceClient("deepseek-ai/DeepSeek-R1-Zero")
+client = InferenceClient("openai-community/gpt2")
 def respond(
     message,
     history: list[tuple[str, str]],
