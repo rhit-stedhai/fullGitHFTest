@@ -43,6 +43,7 @@ css_string = """
 .gradio-app {height: 100%; width: 100%;}
 """
 
+
 # use js and css parameter when changing the look of the window on load
 # with gr.Blocks(css) as demo:
 demo = gr.ChatInterface(
@@ -53,4 +54,3 @@ demo = gr.ChatInterface(
 if __name__ == "__main__":
     demo.launch()
 
-    

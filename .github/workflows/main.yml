@@ -12,16 +12,11 @@ jobs:
     steps:
      - name: Checkout repository
        uses: actions/checkout@v4
-     - name: Configure Git
-       run: |
-         git config --global user.email "stedhai@rose-hulman.edu"
-         git config --global user.name "rhit-stedhai"
      - name: Clone Hugging Face Space
        run: |
          git clone https://IanStedham:$HF_TOKEN@huggingface.co/spaces/IanStedham/fullGitHFConnectTest hf_space
        env:
          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-
      - name: Copy Selected Files
        run: |
          cd hf_space
