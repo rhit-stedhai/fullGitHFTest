@@ -2,6 +2,7 @@ import gradio as gr
 from huggingface_hub import InferenceClient
 import random
 import time
+import json
 
 chat_history = []
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
@@ -41,13 +42,18 @@ def respond(
         response += token
         yield response
 
+def save_chat():
+    with open("chat_history.json", "w") as f:
+        json.dump(chat_history, f, indent=4)
+    return "Chat history saved!"
+
 css_string = """
 .gradio-app {height: 100%; width: 100%;}
 """
-
 with gr.Blocks() as demo:
     chatbot = gr.ChatInterface(respond, css=css_string)
     save_button = gr.Button("Save Chat")
+    save_button.click(save_chat, outputs=gr.Textbox())
 
 
 if __name__ == "__main__":
