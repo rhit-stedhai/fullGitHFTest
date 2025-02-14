@@ -14,12 +14,14 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
+      - name: Configure Git
+        run: |
+          git config --global user.email "stedhai@rose-hulman.edu"
+          git config --global user.name "rhit-stedhai"
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git config --global user.email "stedhai@rose-hulman.edu"
-          git config --global user.name "rhit-stedhai"
           git add hugging_face_space/app.py
           git add hugging_face_space/.gitattributes
           git add hugging_face_space/README.md
