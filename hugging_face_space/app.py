@@ -3,7 +3,7 @@ from huggingface_hub import InferenceClient
 import random
 import time
 
-client = InferenceClient("meta-llama/Llama-3.1-8B")
+client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
 def respond(
     message,
     history: list[tuple[str, str]],
