@@ -14,10 +14,10 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
-          sparse-checkout: |
-            hugging_face_space
-          sparse-checkout-cone-mode: false
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://IanStedham:$HF_TOKEN@huggingface.co/spaces/IanStedham/fullGitHFConnectTest main
+        run: |
+          git add .\hugging_face_space\
+          git commit -m "pushing to space"
+          git push https://IanStedham:$HF_TOKEN@huggingface.co/spaces/IanStedham/fullGitHFConnectTest main
