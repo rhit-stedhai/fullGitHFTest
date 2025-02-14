@@ -43,9 +43,10 @@ def respond(
         yield response
 
 def save_chat():
-    with open("chat_history.json", "w") as f:
+    filename = "chat_history.json"
+    with open(filename, "w") as f:
         json.dump(chat_history, f, indent=4)
-    return "Chat history saved!"
+    return filename
 
 css_string = """
 .gradio-app {height: 100%; width: 100%;}
@@ -53,7 +54,8 @@ css_string = """
 with gr.Blocks() as demo:
     chatbot = gr.ChatInterface(respond, css=css_string)
     save_button = gr.Button("Save Chat")
-    save_button.click(save_chat, outputs=gr.Textbox())
+    file_output = gr.File()
+    save_button.click(save_chat, outputs=file_output)
 
 
 if __name__ == "__main__":
