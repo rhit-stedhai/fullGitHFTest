@@ -3,7 +3,7 @@ from huggingface_hub import InferenceClient
 import random
 import time
 
-client = InferenceClient("HuggingFaceH4/tiny-random-LlamaForCausalLM")
+client = InferenceClient("HuggingFaceH4/mistral-7b-sft-beta")
 def respond(
     message,
     history: list[tuple[str, str]],
