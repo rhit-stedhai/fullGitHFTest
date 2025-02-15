@@ -80,7 +80,7 @@ css_string = """
 with gr.Blocks() as demo:
     chatbot = gr.ChatInterface(respond, 
                                css=css_string,
-                               additional_inputs = [gr.File(label="Upload a text file", type="file")],
+                               additional_inputs = [gr.File(label="Upload a text file")],
                                )
     save_button = gr.Button("Save Chat")
     file_output = gr.File()
