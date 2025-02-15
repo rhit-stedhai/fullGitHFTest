@@ -42,8 +42,8 @@ def respond(
     ):
         token = message.choices[0].delta.content
         response += token
-        chat_history.append(("chatbot", response))
         yield response
+    chat_history.append(("chatbot", response))
 
 def save_chat():
     filename = "chat_history.json"
