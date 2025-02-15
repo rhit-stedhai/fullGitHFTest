@@ -4,11 +4,17 @@ import random
 import time
 import json
 
+from fastapi import FastAPI, UploadFile, Form
+import uvicorn
+import asyncio
+
 # params on load for future
 model = ""
 respond_params_file = ""
 
-chat_history = []
+app = FastAPI()
+
+chat_history = [("start up", "test reponse")]
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
 def respond(
     message,
@@ -38,14 +44,6 @@ def respond(
     messages.append({"role": "user", "content": message})
 
     response = ""
-    if inputFile:
-        with open(file.name, "r", encoding="utf-8"):
-            # error, trying to read closed file
-            content = file.read()
-        response += f"\nFile received:\n{content}\n"
-    else:
-        response += f"\nNo file recieved\n"
-
     for message in client.chat_completion(
         messages,
         max_tokens=max_tokens,
@@ -65,6 +63,14 @@ def process_file(file):
     
     with open(file.name, "r", encoding="utf-8"):
         content = file.read()
+
+    # if inputFile:
+    #     with open(file.name, "r", encoding="utf-8"):
+    #         # error, trying to read closed file
+    #         content = file.read()
+    #     response += f"\nFile received:\n{content}\n"
+    # else:
+    #     response += f"\nNo file recieved\n"
     
     return f"File received:\n{content}"
 
@@ -75,19 +81,35 @@ def save_chat():
         json.dump(chat_history, f, indent=4)
     return filename
 
+
+@app.get("/api/chat/")
+async def chat_get():
+    """Handles GET requests to return a chatbot response"""
+    # response_text = f"Bot: You said '{message}'"
+    # chat_history.append(("User", message))
+    # chat_history.append(("Bot", response_text))
+    # return {"response": response_text}
+
+    return {"response": chat_history}
+
+
 css_string = """
 .gradio-app {height: 100%; width: 100%;}
 """
 with gr.Blocks() as demo:
     chatbot = gr.ChatInterface(respond, 
                                css=css_string,
-                               additional_inputs = [gr.File(label="Upload a text file", type="filepath")],
                                )
     save_button = gr.Button("Save Chat")
     file_output = gr.File()
     save_button.click(save_chat, outputs=file_output)
 
+# Function to run both Gradio & FastAPI
+async def main():
+    gradio_task = asyncio.create_task(demo.launch(share=False))
+    fastapi_task = asyncio.create_task(uvicorn.run(app, host="0.0.0.0", port=7861))
+    await asyncio.gather(gradio_task, fastapi_task)
 
 if __name__ == "__main__":
-    demo.launch()
+    asyncio.run(main())
 
