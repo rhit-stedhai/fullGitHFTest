@@ -42,7 +42,7 @@ def respond(
         with open(file.name, "r", encoding="utf-8"):
             # error, trying to read closed file
             content = file.read()
-            response += f"\nFile received:\n{content}\n"
+        response += f"\nFile received:\n{content}\n"
     else:
         response += f"\nNo file recieved\n"
 
