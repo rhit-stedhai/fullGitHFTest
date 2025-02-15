@@ -86,14 +86,9 @@ def save_chat():
 async def chat_get():
     """Handles GET requests to return a chatbot response"""
     # response_text = f"Bot: You said '{message}'"
-    # chat_history.append(("User", message))
-    # chat_history.append(("Bot", response_text))
-    # return {"response": response_text}
-
-    # filename = "chat_history.json"
-    # with open(filename, "w") as f:
-    #     json.dump(chat_history, f, indent=4)
-    return {"response": "here is my response"}
+    # chat_history.append(("User", "user message"))
+    # chat_history.append(("Bot", "bot message"))
+    return {"response": "Here is my response"}
 
 
 css_string = """
