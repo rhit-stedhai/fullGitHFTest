@@ -90,7 +90,10 @@ async def chat_get():
     # chat_history.append(("Bot", response_text))
     # return {"response": response_text}
 
-    return {"response": chat_history}
+    filename = "chat_history.json"
+    with open(filename, "w") as f:
+        json.dump(chat_history, f, indent=4)
+    return {"response": filename}
 
 
 css_string = """
