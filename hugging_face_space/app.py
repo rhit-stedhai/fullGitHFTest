@@ -40,6 +40,7 @@ def respond(
     response = ""
     if inputFile:
         with open(file.name, "r", encoding="utf-8"):
+            # error, trying to read closed file
             content = file.read()
             response += f"\nFile received:\n{content}\n"
     else:
