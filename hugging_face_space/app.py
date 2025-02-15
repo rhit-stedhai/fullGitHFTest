@@ -4,11 +4,16 @@ import random
 import time
 import json
 
+# params on load for future
+model = ""
+respond_params_file = ""
+
 chat_history = []
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
 def respond(
     message,
     history: list[tuple[str, str]],
+    inputFile = None,
 ):
     # maybe put this in an on_load on something, could be why token usage makes model degrade
     file = open('respond_params.txt', 'r')
@@ -33,6 +38,13 @@ def respond(
     messages.append({"role": "user", "content": message})
 
     response = ""
+    if inputFile:
+        with open(file.name, "r", encoding="utf-8"):
+            content = file.read()
+            response += f"\nFile received:\n{content}\n"
+    else:
+        response += f"\nNo file recieved\n"
+
     for message in client.chat_completion(
         messages,
         max_tokens=max_tokens,
@@ -45,6 +57,17 @@ def respond(
         yield response
     chat_history.append(("chatbot", response))
 
+
+def process_file(file):
+    if file is None:
+        return "No file to process"
+    
+    with open(file.name, "r", encoding="utf-8"):
+        content = file.read()
+    
+    return f"File received:\n{content}"
+
+
 def save_chat():
     filename = "chat_history.json"
     with open(filename, "w") as f:
@@ -55,7 +78,10 @@ css_string = """
 .gradio-app {height: 100%; width: 100%;}
 """
 with gr.Blocks() as demo:
-    chatbot = gr.ChatInterface(respond, css=css_string)
+    chatbot = gr.ChatInterface(respond, 
+                               css=css_string,
+                               additional_inputs = [gr.File(label="Upload a text file", type="file")],
+                               )
     save_button = gr.Button("Save Chat")
     file_output = gr.File()
     save_button.click(save_chat, outputs=file_output)
