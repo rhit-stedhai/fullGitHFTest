@@ -99,7 +99,11 @@ with gr.Blocks() as demo:
 
 @app.get("/api/chat/")
 async def chat_get():
-    return {"response": "Here is my response"}
+    # might need to format as a built in json instead of returing a file
+    filename = "chat_history.json"
+    with open(filename, "w") as f:
+        json.dump(chat_history, f, indent=4)
+    return filename
 
 
 gradioApp = gr.mount_gradio_app(app, demo, path="/")
