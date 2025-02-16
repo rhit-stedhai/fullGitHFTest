@@ -18,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-chat_history = [{"start up": "test reponse"}]
+chat_history = []
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
 def respond(
     message,
@@ -75,5 +75,6 @@ async def chat_get():
 gradioApp = gr.mount_gradio_app(app, demo, path="/")
 
 if __name__ == "__main__":
+    chat_history = [{"start up": "test reponse"}]
     uvicorn.run(gradioApp, host="0.0.0.0", port=7860)
 
