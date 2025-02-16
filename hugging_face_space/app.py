@@ -60,11 +60,10 @@ def respond(
         yield response
     chat_history.append({"chatbot": response})
 
-css_string = """
-.gradio-app {height: 100%; width: 100%;}
-"""
+# css_string = """
+# .gradio-app {height: 100%; width: 100%;}
+# """
 demo = gr.ChatInterface(respond, 
-                        css=css_string,
                         )
 
 
