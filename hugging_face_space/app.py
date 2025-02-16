@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-chat_history = [("start up", "test reponse")]
+chat_history = [{"start up": "test reponse"}]
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
 def respond(
     message,
@@ -38,7 +38,7 @@ def respond(
     top_p=float(parametersLineFour[1][:-1])
     file.close()
 
-    chat_history.append(("user", message))
+    chat_history.append({"user": message})
 
     messages = [{"role": "system", "content": system_message}]
     for val in history:
@@ -59,7 +59,7 @@ def respond(
         token = message.choices[0].delta.content
         response += token
         yield response
-    chat_history.append(("chatbot", response))
+    chat_history.append({"chatbot": response})
 
 def process_file(file):
     if file is None:
