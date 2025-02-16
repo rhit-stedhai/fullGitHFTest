@@ -97,12 +97,13 @@ with gr.Blocks() as demo:
     save_button.click(save_chat, outputs=file_output)
 
 
-app = gr.mount_gradio_app(app, demo, path="/")
 @app.get("/api/chat/")
 async def chat_get():
     return {"response": "Here is my response"}
 
 
+gradioApp = gr.mount_gradio_app(app, demo, path="/")
+
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=7860)
+    uvicorn.run(gradioApp, host="0.0.0.0", port=7860)
 
