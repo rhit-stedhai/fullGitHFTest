@@ -1,7 +1,5 @@
 import gradio as gr
 from huggingface_hub import InferenceClient
-import random
-import time
 import json
 
 from fastapi import FastAPI
@@ -13,13 +11,13 @@ model = ""
 respond_params_file = ""
 
 app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 chat_history = [("start up", "test reponse")]
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
@@ -99,12 +97,9 @@ with gr.Blocks() as demo:
     save_button.click(save_chat, outputs=file_output)
 
 
-app.mount("/", gr.mount_gradio_app(app=app, blocks=demo, path="/"))
+app.mount("/", gr.mount_gradio_app(app, demo, path="/"))
 @app.get("/api/chat/")
 async def chat_get():
-    # response_text = f"Bot: You said '{message}'"
-    # chat_history.append(("User", "user message"))
-    # chat_history.append(("Bot", "bot message"))
     return {"response": "Here is my response"}
 
 
