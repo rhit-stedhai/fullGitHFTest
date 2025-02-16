@@ -9,7 +9,7 @@ import asyncio
 model = ""
 respond_params_file = ""
 css_string = """
-chatbot {
+#chatbot {
     height: 100vh
 }
 """
