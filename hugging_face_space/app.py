@@ -9,7 +9,9 @@ import asyncio
 model = ""
 respond_params_file = ""
 css_string = """
-.gradio-container {height: 100%}
+chatbot {
+    height: 100vh
+}
 """
 
 chat_history = [{"start up": "test reponse"}]
