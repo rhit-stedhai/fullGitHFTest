@@ -79,10 +79,7 @@ def process_file(file):
     return f"File received:\n{content}"
 
 def save_chat():
-    filename = "chat_history.json"
-    with open(filename, "w") as f:
-        json.dump(chat_history, f, indent=4)
-    return filename
+    return chat_history
 
 
 css_string = """
