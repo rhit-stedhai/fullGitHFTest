@@ -1,6 +1,5 @@
 import gradio as gr
 from huggingface_hub import InferenceClient
-
 from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,17 +7,11 @@ from fastapi.middleware.cors import CORSMiddleware
 # params on load for future
 model = ""
 respond_params_file = ""
+# css_string = """
+# .gradio-app {height: 100%; width: 100%;}
+# """
 
-app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-chat_history = []
+chat_history = [{"start up": "test reponse"}]
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
 def respond(
     message,
@@ -60,20 +53,22 @@ def respond(
         yield response
     chat_history.append({"chatbot": response})
 
-# css_string = """
-# .gradio-app {height: 100%; width: 100%;}
-# """
-demo = gr.ChatInterface(respond, 
-                        )
-
+demo = gr.ChatInterface(respond)
+app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+gradioApp = gr.mount_gradio_app(app, demo, path="/")
 
 @app.get("/api/chat/")
 async def chat_get():
     return {"chat history": chat_history}
 
-gradioApp = gr.mount_gradio_app(app, demo, path="/")
 
 if __name__ == "__main__":
-    chat_history = [{"start up": "test reponse"}]
     uvicorn.run(gradioApp, host="0.0.0.0", port=7860)
 
