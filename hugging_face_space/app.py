@@ -11,6 +11,7 @@ respond_params_file = ""
 css_string = """
 #chatbot {
     height: 100vh
+    max-height: 100vh
 }
 """
 
