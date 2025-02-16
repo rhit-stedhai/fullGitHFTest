@@ -68,18 +68,18 @@ app.add_middleware(
 async def chat_get():
     return {"chat history": chat_history}
 
-#gradioApp = gr.mount_gradio_app(app, demo, path="/")
-# if __name__ == "__main__":
-#     demo.launch()
-#     uvicorn.run(gradioApp, host="0.0.0.0", port=7860)
-
-
-
-
-async def main():
-    gradio_task = asyncio.create_task(demo.launch(share=False))
-    fastapi_task = asyncio.create_task(uvicorn.run(app, host="0.0.0.0", port=7861))
-    await asyncio.gather(gradio_task, fastapi_task)
-
+gradioApp = gr.mount_gradio_app(app, demo, path="/")
 if __name__ == "__main__":
-    asyncio.run(main())
+    demo.launch()
+    uvicorn.run(gradioApp, host="0.0.0.0", port=7860)
+
+
+
+
+# async def main():
+#     gradio_task = asyncio.create_task(demo.launch(share=False))
+#     fastapi_task = asyncio.create_task(uvicorn.run(app, host="0.0.0.0", port=7861))
+#     await asyncio.gather(gradio_task, fastapi_task)
+
+# if __name__ == "__main__":
+#     asyncio.run(main())
