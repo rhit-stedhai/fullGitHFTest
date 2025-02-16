@@ -8,9 +8,9 @@ import asyncio
 # params on load for future
 model = ""
 respond_params_file = ""
-# css_string = """
-# .gradio-app {height: 100%; width: 100%;}
-# """
+css_string = """
+.gradio-app {height: 100%; width: 100%;}
+"""
 
 chat_history = [{"start up": "test reponse"}]
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
@@ -54,8 +54,9 @@ def respond(
         yield response
     chat_history.append({"chatbot": response})
 
+# need to add css to make look better
 with gr.Blocks() as demo:
-    chatbot = gr.ChatInterface(respond)
+    chatbot = gr.ChatInterface(respond, css=css_string)
 
 app = FastAPI()
 app.add_middleware(
@@ -72,15 +73,4 @@ async def chat_get():
 
 gradioApp = gr.mount_gradio_app(app, demo, path="/")
 if __name__ == "__main__":
-    #demo.launch()
     uvicorn.run(gradioApp, host="0.0.0.0", port=7860)
-
-
-
-# async def main():
-#     gradio_task = asyncio.create_task(demo.launch(share=False))
-#     fastapi_task = asyncio.create_task(uvicorn.run(app, host="0.0.0.0", port=7861))
-#     await asyncio.gather(gradio_task, fastapi_task)
-
-# if __name__ == "__main__":
-#     asyncio.run(main())
