@@ -9,7 +9,7 @@ import asyncio
 model = ""
 respond_params_file = ""
 css_string = """
-.gradio-app {height: 100%; width: 100%;}
+.gradio-container {height: 100%}
 """
 
 chat_history = [{"start up": "test reponse"}]
@@ -55,8 +55,8 @@ def respond(
     chat_history.append({"chatbot": response})
 
 # need to add css to make look better
-with gr.Blocks() as demo:
-    chatbot = gr.ChatInterface(respond, css=css_string)
+with gr.Blocks(css=css_string) as demo:
+    chatbot = gr.ChatInterface(respond)
 
 app = FastAPI()
 app.add_middleware(
