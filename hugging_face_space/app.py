@@ -54,7 +54,9 @@ def respond(
         yield response
     chat_history.append({"chatbot": response})
 
-demo = gr.ChatInterface(respond)
+with gr.Blocks() as demo:
+    chatbot = gr.ChatInterface(respond)
+
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -72,7 +74,6 @@ gradioApp = gr.mount_gradio_app(app, demo, path="/")
 if __name__ == "__main__":
     demo.launch()
     uvicorn.run(gradioApp, host="0.0.0.0", port=7860)
-
 
 
 
