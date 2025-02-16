@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-chat_history = {"start up": "test reponse"}
+chat_history = [{"start up": "test reponse"}]
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
 def respond(
     message,
@@ -78,11 +78,6 @@ def process_file(file):
     
     return f"File received:\n{content}"
 
-def save_chat():
-
-    return chat_history
-
-
 css_string = """
 .gradio-app {height: 100%; width: 100%;}
 """
@@ -97,11 +92,7 @@ with gr.Blocks() as demo:
 
 @app.get("/api/chat/")
 async def chat_get():
-    # might need to format as a built in json instead of returing a file
-    filename = "chat_history.json"
-    with open(filename, "w") as f:
-        json.dump(chat_history, f, indent=4)
-    return filename
+    return {"chat history": chat_history}
 
 
 gradioApp = gr.mount_gradio_app(app, demo, path="/")
