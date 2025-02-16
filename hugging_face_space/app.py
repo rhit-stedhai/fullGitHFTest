@@ -3,6 +3,7 @@ from huggingface_hub import InferenceClient
 from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
+import asyncio
 
 # params on load for future
 model = ""
@@ -55,21 +56,26 @@ def respond(
 
 demo = gr.ChatInterface(respond)
 app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 @app.get("/api/chat/")
 async def chat_get():
     return {"chat history": chat_history}
 
-gradioApp = gr.mount_gradio_app(app, demo, path="/gradio")
+#gradioApp = gr.mount_gradio_app(app, demo, path="/")
 
-if __name__ == "__main__":
-    demo.launch()
-    uvicorn.run(gradioApp, host="0.0.0.0", port=7860)
+# if __name__ == "__main__":
+#     demo.launch()
+#     uvicorn.run(gradioApp, host="0.0.0.0", port=7860)
 
+# Function to run both Gradio & FastAPI
+async def main():
+    gradio_task = asyncio.create_task(demo.launch(share=False))
+    fastapi_task = asyncio.create_task(uvicorn.run(app, host="0.0.0.0", port=7861))
+    await asyncio.gather(gradio_task, fastapi_task)
