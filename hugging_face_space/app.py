@@ -63,12 +63,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api/chat")
+@app.get("/api/chat/")
 async def chat_get():
-    print("recievede here")
     return {"chat history": chat_history}
 
-gradioApp = gr.mount_gradio_app(app, demo, path="/")
+gradioApp = gr.mount_gradio_app(app, demo, path="/gradio")
 
 if __name__ == "__main__":
     demo.launch()
