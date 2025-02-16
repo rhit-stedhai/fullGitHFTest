@@ -99,10 +99,9 @@ with gr.Blocks() as demo:
     save_button.click(save_chat, outputs=file_output)
 
 
-app.mount("/", gr.mount_gradio_app(app, demo, path="/"))
+app.mount("/", gr.mount_gradio_app(app=app, blocks=demo, path="/"))
 @app.get("/api/chat/")
 async def chat_get():
-    """Handles GET requests to return a chatbot response"""
     # response_text = f"Bot: You said '{message}'"
     # chat_history.append(("User", "user message"))
     # chat_history.append(("Bot", "bot message"))
