@@ -65,6 +65,7 @@ app.add_middleware(
 
 @app.get("/api/chat/")
 async def chat_get():
+    print("recievede here")
     return {"chat history": chat_history}
 
 gradioApp = gr.mount_gradio_app(app, demo, path="/")
