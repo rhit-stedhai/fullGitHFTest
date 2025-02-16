@@ -64,10 +64,9 @@ app.add_middleware(
 )
 gradioApp = gr.mount_gradio_app(app, demo, path="/")
 
-@app.get("/api/chat/")
-async def chat_get():
-    return {"chat history": chat_history}
-
+# @app.get("/api/chat/")
+# async def chat_get():
+#     return {"chat history": chat_history}
 
 if __name__ == "__main__":
     uvicorn.run(gradioApp, host="0.0.0.0", port=7860)
