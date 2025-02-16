@@ -11,13 +11,13 @@ model = ""
 respond_params_file = ""
 
 app = FastAPI()
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 chat_history = [("start up", "test reponse")]
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
@@ -97,7 +97,7 @@ with gr.Blocks() as demo:
     save_button.click(save_chat, outputs=file_output)
 
 
-app.mount("/", gr.mount_gradio_app(app, demo, path="/"))
+app = gr.mount_gradio_app(app, demo, path="/")
 @app.get("/api/chat/")
 async def chat_get():
     return {"response": "Here is my response"}
