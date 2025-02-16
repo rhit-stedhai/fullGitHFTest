@@ -4,15 +4,22 @@ import random
 import time
 import json
 
-from fastapi import FastAPI, UploadFile, Form
+from fastapi import FastAPI
 import uvicorn
-import asyncio
+from fastapi.middleware.cors import CORSMiddleware
 
 # params on load for future
 model = ""
 respond_params_file = ""
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 chat_history = [("start up", "test reponse")]
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
@@ -56,7 +63,6 @@ def respond(
         yield response
     chat_history.append(("chatbot", response))
 
-
 def process_file(file):
     if file is None:
         return "No file to process"
@@ -74,21 +80,11 @@ def process_file(file):
     
     return f"File received:\n{content}"
 
-
 def save_chat():
     filename = "chat_history.json"
     with open(filename, "w") as f:
         json.dump(chat_history, f, indent=4)
     return filename
-
-
-@app.get("/api/chat/")
-async def chat_get():
-    """Handles GET requests to return a chatbot response"""
-    # response_text = f"Bot: You said '{message}'"
-    # chat_history.append(("User", "user message"))
-    # chat_history.append(("Bot", "bot message"))
-    return {"response": "Here is my response"}
 
 
 css_string = """
@@ -102,12 +98,17 @@ with gr.Blocks() as demo:
     file_output = gr.File()
     save_button.click(save_chat, outputs=file_output)
 
-# Function to run both Gradio & FastAPI
-async def main():
-    gradio_task = asyncio.create_task(demo.launch(share=False))
-    fastapi_task = asyncio.create_task(uvicorn.run(app, host="0.0.0.0", port=7861))
-    await asyncio.gather(gradio_task, fastapi_task)
+
+app.mount("/", gr.mount_gradio_app(app, demo, path="/"))
+@app.get("/api/chat/")
+async def chat_get():
+    """Handles GET requests to return a chatbot response"""
+    # response_text = f"Bot: You said '{message}'"
+    # chat_history.append(("User", "user message"))
+    # chat_history.append(("Bot", "bot message"))
+    return {"response": "Here is my response"}
+
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    uvicorn.run(app, host="0.0.0.0", port=7860)
 
