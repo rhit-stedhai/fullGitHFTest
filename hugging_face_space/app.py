@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-chat_history = [{"start up": "test reponse"}]
+chat_history = {{"start up": "test reponse"}}
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
 def respond(
     message,
@@ -79,6 +79,7 @@ def process_file(file):
     return f"File received:\n{content}"
 
 def save_chat():
+
     return chat_history
 
 
