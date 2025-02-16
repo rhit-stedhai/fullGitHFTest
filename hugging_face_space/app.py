@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-chat_history = {{"start up": "test reponse"}}
+chat_history = {"start up": "test reponse"}
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
 def respond(
     message,
