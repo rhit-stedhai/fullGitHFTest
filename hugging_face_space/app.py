@@ -63,7 +63,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/api/chat")
+@app.get("/api/chat")
 async def chat_get():
     print("recievede here")
     return {"chat history": chat_history}
