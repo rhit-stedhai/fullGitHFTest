@@ -58,7 +58,7 @@ def respond(
     chat_history.append({"chatbot": response})
 
 # need to add css to make look better
-with gr.Blocks(css=css_string) as demo:
+with gr.Blocks() as demo:
     chatbot = gr.ChatInterface(respond)
 
 app = FastAPI()
