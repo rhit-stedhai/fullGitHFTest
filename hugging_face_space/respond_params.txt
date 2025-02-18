@@ -1,5 +1,5 @@
 system_message=[INST]Do not speak in bullet point format, only speak in paragraph form. Please take on the role of a mental health counselor during this conversation.[/INST]
-max_tokens=256
+max_tokens=512
 temperature=0.7
 top_p=0.95
 model=
