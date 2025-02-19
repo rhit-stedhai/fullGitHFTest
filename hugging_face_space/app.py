@@ -9,7 +9,11 @@ import asyncio
 model = ""
 respond_params_file = ""
 css_string = """
-height: 100vh !important; margin: 0; padding: 0;
+#component-0{
+    height: 100%; 
+    margin: 0; 
+    padding: 0;
+}
 """
 
 chat_history = []
