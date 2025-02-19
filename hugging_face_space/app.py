@@ -9,7 +9,7 @@ import asyncio
 model = ""
 respond_params_file = ""
 css_string = """
-.fullscreen { height: 100vh !important; margin: 0; padding: 0; }
+#fullscreen { height: 100vh !important; margin: 0; padding: 0; }
 """
 
 chat_history = [{"start up": "test reponse"}]
@@ -56,8 +56,8 @@ def respond(
 
 # need to add css to make look better
 with gr.Blocks(css=css_string) as demo:
-    with gr.Row(elem_id="chat-container", classes="fullscreen"):
-        chatbot = gr.ChatInterface(respond)
+    with gr.Row(elem_id="fullscreen"):
+        chatbot = gr.ChatInterface(css = respond)
 
 app = FastAPI()
 app.add_middleware(
