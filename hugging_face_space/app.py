@@ -57,7 +57,7 @@ def respond(
 # need to add css to make look better
 with gr.Blocks(css=css_string) as demo:
     with gr.Row(elem_id="fullscreen"):
-        chatbot = gr.ChatInterface(css = respond)
+        chatbot = gr.ChatInterface(fn = respond)
 
 app = FastAPI()
 app.add_middleware(
