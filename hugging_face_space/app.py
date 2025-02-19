@@ -26,8 +26,9 @@ css_string = """
     border-top: 1px solid #ddd;
 }
 
-#component-19{
-height: 90%;
+#chatbot {
+    flex-grow: 1; 
+    overflow: auto;
 }
 """
 
@@ -76,7 +77,7 @@ def respond(
 # need to add css to make look better
 with gr.Blocks(css=css_string) as demo:
     with gr.Column(elem_id="chat-container"):
-        chatbot = gr.ChatInterface(fn = respond)
+        chatbot = gr.ChatInterface(fn = respond, chatbot = gr.Chatbot(elem_id="chatbot", render=False))
         with gr.Row(elem_id="input-container"):
             user_input = gr.Textbox(show_label=False, placeholder="Type your message...", scale=8)
 with gr.Blocks() as demo:
