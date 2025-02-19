@@ -9,10 +9,7 @@ import asyncio
 model = ""
 respond_params_file = ""
 css_string = """
-#chatbot {
-    height: 100vh
-    max-height: 100vh
-}
+.fullscreen { height: 100vh !important; margin: 0; padding: 0; }
 """
 
 chat_history = [{"start up": "test reponse"}]
