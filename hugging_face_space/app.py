@@ -26,22 +26,32 @@ css_string = """
 
 chat_history = []
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
-file = open('respond_params.txt', 'r')
-parametersLineOne = file.readline().split("=")
-parametersLineTwo = file.readline().split("=")
-parametersLineThree = file.readline().split("=")
-parametersLineFour = file.readline().split("=")
-parametersLineFive = file.readline().split("=") # make this load in the model
-system_message=parametersLineOne[1][:-1]
-max_tokens=int(parametersLineTwo[1][:-1])
-temperature=float(parametersLineThree[1][:-1])
-top_p=float(parametersLineFour[1][:-1])
-file.close()
+# file = open('respond_params.txt', 'r')
+# parametersLineOne = file.readline().split("=")
+# parametersLineTwo = file.readline().split("=")
+# parametersLineThree = file.readline().split("=")
+# parametersLineFour = file.readline().split("=")
+# parametersLineFive = file.readline().split("=") # make this load in the model
+# system_message=parametersLineOne[1][:-1]
+# max_tokens=int(parametersLineTwo[1][:-1])
+# temperature=float(parametersLineThree[1][:-1])
+# top_p=float(parametersLineFour[1][:-1])
+# file.close()
 def respond(
     message,
     history: list[tuple[str, str]],
-    inputFile = None,
 ):
+    file = open('respond_params.txt', 'r')
+    parametersLineOne = file.readline().split("=")
+    parametersLineTwo = file.readline().split("=")
+    parametersLineThree = file.readline().split("=")
+    parametersLineFour = file.readline().split("=")
+    parametersLineFive = file.readline().split("=") # make this load in the model
+    system_message=parametersLineOne[1][:-1]
+    max_tokens=int(parametersLineTwo[1][:-1])
+    temperature=float(parametersLineThree[1][:-1])
+    top_p=float(parametersLineFour[1][:-1])
+    file.close()
     # maybe put this in an on_load on something, could be why token usage makes model degrade
     chat_history.append({"user": message})
 
