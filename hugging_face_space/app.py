@@ -9,10 +9,10 @@ import asyncio
 model = ""
 respond_params_file = ""
 css_string = """
-#fullscreen { height: 100vh !important; margin: 0; padding: 0; }
+height: 100vh !important; margin: 0; padding: 0;
 """
 
-chat_history = [{"start up": "test reponse"}]
+chat_history = []
 client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
 def respond(
     message,
@@ -55,9 +55,8 @@ def respond(
     chat_history.append({"chatbot": response})
 
 # need to add css to make look better
-with gr.Blocks(css=css_string) as demo:
-    with gr.Row(elem_id="fullscreen"):
-        chatbot = gr.ChatInterface(fn = respond)
+with gr.Blocks() as demo:
+    chatbot = gr.ChatInterface(fn = respond, css=css_string)
 
 app = FastAPI()
 app.add_middleware(
