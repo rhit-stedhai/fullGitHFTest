@@ -10,7 +10,7 @@ model = ""
 respond_params_file = ""
 css_string = """
 #chat-container { 
-    height: 100vh !important; 
+    height: 100%; 
     display: flex; 
     flex-direction: column; 
     justify-content: space-between; 
