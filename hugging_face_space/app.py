@@ -25,6 +25,10 @@ css_string = """
     background: white; 
     border-top: 1px solid #ddd;
 }
+
+#component-19{
+height: 90%;
+}
 """
 
 chat_history = []
