@@ -9,10 +9,21 @@ import asyncio
 model = ""
 respond_params_file = ""
 css_string = """
-#component-0{
-    height: 100%; 
+#chat-container { 
+    height: 100vh !important; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
     margin: 0; 
     padding: 0;
+}
+
+#input-container {
+    display: flex; 
+    width: 100%; 
+    padding: 10px; 
+    background: white; 
+    border-top: 1px solid #ddd;
 }
 """
 
@@ -59,6 +70,11 @@ def respond(
     chat_history.append({"chatbot": response})
 
 # need to add css to make look better
+with gr.Blocks(css=css_string) as demo:
+    with gr.Column(elem_id="chat-container"):
+        chatbot = gr.ChatInterface(fn = respond)
+        with gr.Row(elem_id="input-container"):
+            user_input = gr.Textbox(show_label=False, placeholder="Type your message...", scale=8)
 with gr.Blocks() as demo:
     chatbot = gr.ChatInterface(fn = respond, css=css_string)
 
